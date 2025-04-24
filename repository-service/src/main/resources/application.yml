@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/repsydb
+    url: jdbc:postgresql://localhost:5433/repsydb
     username: repsyuser
     password: 123456789
   jpa:
@@ -15,4 +15,4 @@ spring:
 
 repsy:
   storage:
-    type: filesystem
+    type: ${STORAGE_TYPE:filesystem} # ortam değişkeniyle override edilebilir hale getirildi.

@@ -22,6 +22,7 @@ public class ObjectStorageService implements StorageService{
     public void save(String packageName, String version, String fileName, InputStream data) {
         try {
             String objectName = packageName + "/" + version + "/" + fileName;
+            System.out.println(">>> [MINIO] Uploading to: " + objectName);
             minioClient.putObject(
                     PutObjectArgs.builder()
                             .bucket("repsy")
@@ -30,7 +31,10 @@ public class ObjectStorageService implements StorageService{
                             .contentType("application/octet-stream")
                             .build()
             );
+
+            System.out.println(">>> [MINIO] Upload başarılı!");
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("MinIO dosya kaydetme hatası",e);
         }
     }
