@@ -34,25 +34,25 @@ This command:
 - Repository Service starts the application in the background.
 
 ### 3 - Services
-- PostgreSQL - [localhost:5433](http://localhost:9000)
-- MinIO      - [http://localhost:9000](http://localhost:9000)(Admin Panel:[http://localhost:9001](http://localhost:9000))
-- Repository Service - [http://localhost:8080](http://localhost:9000)
+- PostgreSQL - [localhost:5433](localhost:5433)
+- MinIO      - [http://localhost:9000](http://localhost:9000)(Admin Panel:[http://localhost:9001](http://localhost:9001))
+- Repository Service - [http://localhost:8080](http://localhost:8080)
 
 ## API Endpoints
 
 ### Deploy Package
-- Endpoint: `POST` `/deploy`
+- Endpoint: `POST` `/{packageName}/{version}`
 - Parameters (multipart/form-data):
      1. [x] packageName - Package Name
      2. [x] version     - Package Version
      3. [x] file        - .rep file or meta.json file
 - Prefix cURL:
-    `curl -X POST "http://localhost:8080/deploy" \ 
+    `curl -X POST "http://localhost:8080/{packageName}/{version}" \ 
     -F "packageName=mypackage" \
     -F "version=1.0.0" \
     -F "file=@path/to/package.rep`
 - And
-  `curl -X POST "http://localhost:8080/deploy" \ 
+  `curl -X POST "http://localhost:8080/{packageName}/{version}" \ 
   -F "packageName=mypackage" \
   -F "version=1.0.0" \
   -F "file=@path/to/meta.json`
@@ -60,11 +60,11 @@ This command:
 Only `.rep` and `meta.json` files are accepted. Other files are rejected.
 
 ### Download Package
-- Endpoint: `GET` `/download/{packageName}/{version}/{fileName}`
+- Endpoint: `GET` `/{packageName}/{version}/{fileName}`
 - Example cURL:
-    `curl -X GET "http://localhost:8080/download/mypackage/1.0.0/package.rep" --output package.rep`
+    `curl -X GET "http://localhost:8080/mypackage/1.0.0/package.rep" --output package.rep`
 - Or
-    `curl -X GET "http://localhost:8080/download/mypackage/1.0.0/meta.json" --output meta.json`
+    `curl -X GET "http://localhost:8080/mypackage/1.0.0/meta.json" --output meta.json`
 
 ## Storage Type Selection
 - The application supports two different storage strategies:

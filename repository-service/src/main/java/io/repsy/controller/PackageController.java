@@ -32,7 +32,7 @@ public class PackageController {
         this.packageMetadataRepository = packageMetadataRepository;
     }
 
-    @PostMapping("/deploy")
+    @PostMapping("/{packageName}/{version}")
     public ResponseEntity<String> uploadPackage
             (@RequestParam("packageName") String packageName,
              @RequestParam("version") String version,
@@ -60,6 +60,17 @@ public class PackageController {
                                 .badRequest()
                                 .body("Invalid meta.json: 'name' and 'version' fields are required.");
                     }
+
+                    // Json dosyası içinde name ve version gibi kritik alanların boş gönderilmesine karşın kontrol ediyorum
+                    String metaName = jsonNode.get("name").asText();
+                    String metaVersion = jsonNode.get("version").asText();
+
+                    if (metaName.isBlank() || metaVersion.isBlank()) {
+                        return ResponseEntity
+                                .badRequest()
+                                .body("Invalid meta.json: 'name' and 'version' must not be empty.");
+                    }
+
                 } catch (Exception e) {
                     return ResponseEntity
                             .badRequest()
@@ -100,7 +111,7 @@ public class PackageController {
         }
     }
 
-    @GetMapping("/download/{packageName}/{version}/{fileName}")
+    @GetMapping("/{packageName}/{version}/{fileName}")
     public ResponseEntity<InputStreamResource> downloadPackage
             (@PathVariable("packageName") String packageName,
              @PathVariable("version") String version,
