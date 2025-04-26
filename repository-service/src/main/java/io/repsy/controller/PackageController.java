@@ -31,9 +31,20 @@ public class PackageController {
     }
 
     @PostMapping("/deploy")
-    public ResponseEntity<String> uploadPackage(@RequestParam("packageName") String packageName, @RequestParam("version") String version, @RequestParam("file") MultipartFile file){
+    public ResponseEntity<String> uploadPackage
+            (@RequestParam("packageName") String packageName,
+             @RequestParam("version") String version,
+             @RequestParam("file") MultipartFile file){
+
         try (InputStream inputStream = file.getInputStream()){
             String fileName = file.getOriginalFilename();
+
+            // Dosya ismi kontrolü
+            if (fileName == null || !fileName.equals("meta.json") && !fileName.endsWith(".rep")){
+                return ResponseEntity
+                        .badRequest()
+                        .body("Invalid file type. Only 'meta.json' or '.rep' files are allowed.");
+            }
 
             System.out.println(">>> [CONTROLLER] saving file: " + fileName);
             storageService.save(packageName, version, fileName, inputStream);
@@ -47,6 +58,7 @@ public class PackageController {
                     LocalDateTime.now()
             );
             packageMetadataRepository.save(metadata);
+            
             System.out.println(">>> [CONTROLLER] storageService class: " + storageService.getClass().getName());
             return ResponseEntity.ok("Package uploaded successfully.");
         } catch (Exception e) {
