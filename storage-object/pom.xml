@@ -13,6 +13,14 @@
     <artifactId>storage-object</artifactId>
     <packaging>jar</packaging>
 
+    <distributionManagement>
+        <repository>
+            <id>repsy</id>
+            <name>My Private Maven Repository on Repsy</name>
+            <url>https://repo.repsy.io/mvn/cerletumutcan/repsy-java-libs</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <!-- Storage API Bağımlılığı -->
         <dependency>

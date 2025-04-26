@@ -33,14 +33,17 @@
         <dependency>
             <groupId>io.repsy</groupId>
             <artifactId>storage-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.repsy</groupId>
             <artifactId>storage-filesystem</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.repsy</groupId>
             <artifactId>storage-object</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

@@ -13,4 +13,12 @@
     <artifactId>storage-api</artifactId>
     <packaging>jar</packaging>
 
+    <distributionManagement>
+        <repository>
+            <id>repsy</id>
+            <name>My Private Repository on Repsy</name>
+            <url>https://repo.repsy.io/mvn/cerletumutcan/repsy-java-libs</url>
+        </repository>
+    </distributionManagement>
+
 </project>

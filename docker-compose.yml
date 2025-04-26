@@ -27,6 +27,24 @@ services:
     volumes:
       - minio_data:/data
 
+  repository-service:
+    image: umutcancerlet/repository-service:latest
+    container_name: repsy-repo-service
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/repsydb
+      SPRING_DATASOURCE_USERNAME: repsyuser
+      SPRING_DATASOURCE_PASSWORD: 123456789
+      repsy.storage.type: ${STORAGE_TYPE} # environment değişkeninde okunan değere göre depolama yöntemi çekiliyor
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    depends_on:
+      - postgres
+      - minio
+
 volumes:
   postgres_data:
   minio_data:
